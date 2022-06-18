@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
@@ -517,3 +518,14 @@ class RequestRefundView(View):
             except ObjectDoesNotExist:
                 messages.info(self.request, "This order does not exist.")
                 return redirect("core:request-refund")
+
+def get_ip(request):
+    try:
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+    except:
+        ip = ""
+    return HttpResponse(ip)
