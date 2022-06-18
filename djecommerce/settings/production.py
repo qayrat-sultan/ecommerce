@@ -23,7 +23,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(env='DATABASE_URL', conn_max_age=600)
+    'default': dj_database_url.config(env='DB_URL', conn_max_age=600)
 }
 
 STRIPE_PUBLIC_KEY = config('STRIPE_LIVE_PUBLIC_KEY')
